@@ -93,7 +93,9 @@ def guardar_clima():
 				"humedad": humedad,
 				"viento": viento,
 				"descripcion": descripcion,
-				"url": url
+				"url": url,
+				"lat": lat,
+				"lon": lon
 			}
 		else:
 			response_data = {

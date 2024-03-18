@@ -90,13 +90,14 @@ $conn->close();
             </div>`;
 	}
 
+	const addPopup = (dato) => {
+		var marker = L.marker([dato.lat, dato.lon]).addTo(mymap);
+		marker.bindPopup(popupLabel(dato));
+	}
+
 	// Función para mostrar los datos en el mapa
 	datosClima.forEach(function(dato) {
-		//Creamos marcadores en el mapa
-		var marker = L.marker([dato.lat, dato.lon]).addTo(mymap);
-		
-		//Añañdimos el html al popup con marker.bindPopup("<b>Hola!</b>")
-		marker.bindPopup(popupLabel(dato));
+		addPopup(dato);
 	});
 
 	// Ejemplo de interacción con un popup y AJAX para un nuevo dato
@@ -119,7 +120,8 @@ $conn->close();
 				url: "http://127.0.0.1:5000/guardar-clima", // Asegúrate de que la URL es accesible y correcta
 				data: datos,
 				success: function(response) {
-					window.location.reload();
+					console.log(response);
+					addPopup(response);
 				},
 				error: function(error) {
 					console.error(error);
