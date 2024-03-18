@@ -14,13 +14,13 @@ CORS(app)
 # Función para conectarse a la base de datos
 def connect_db():
 	db_config = {
-        'host': config['default']['host'],
-        'user': config['default']['username'],
+		'host': config['default']['host'],
+		'user': config['default']['username'],
 		'port': int(config.get('default', 'port', fallback=3306)),
-        'password': config['default']['password'],
-        'database': config['default']['db_name'],
-        'cursorclass': pymysql.cursors.DictCursor
-    }
+		'password': config['default']['password'],
+		'database': config['default']['db_name'],
+		'cursorclass': pymysql.cursors.DictCursor
+	}
 
 	connection = pymysql.connect(**db_config)
 
@@ -49,7 +49,7 @@ def insertar_clima_db(data):
 		success = True
 	finally:
 		connection.close()
-	
+
 	return success
 	
 
@@ -62,7 +62,7 @@ def guardar_clima():
 	# Realizar la petición a la API de clima
 	api_key = config['default']['api-key']
 	url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric&lang=es"
-	
+
 	# Realizamos petición, guardamos datos, y devolvemos json
 	request_response = requests.get(url)
 	response_data = {
@@ -86,21 +86,21 @@ def guardar_clima():
 
 		if inserted:
 			response_data = {
-            	"success": True,
-            	"message": "Datos del clima guardados correctamente.",
-            	"fecha": fecha,
-            	"temperatura": temperatura,
-            	"humedad": humedad,
-            	"viento": viento,
-            	"descripcion": descripcion,
-            	"url": url
-        	}
+				"success": True,
+				"message": "Datos del clima guardados correctamente.",
+				"fecha": fecha,
+				"temperatura": temperatura,
+				"humedad": humedad,
+				"viento": viento,
+				"descripcion": descripcion,
+				"url": url
+			}
 		else:
 			response_data = {
 				"success": False,
 				"message": "Error al insertar datos en base de datos."
 			}
-	
+
 	response = jsonify(response_data)
 
 	return response
