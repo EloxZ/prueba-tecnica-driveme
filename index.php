@@ -79,15 +79,15 @@ $conn->close();
 
 	const popupLabel = (dato) => {
 		return `<div style="font-family: Arial, sans-serif; color: #333; background-color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
-                <h3 style="margin: 0;">Tiempo:</h3>
-                <p style="margin: 5px 0;">Latitud: <strong>${dato.lat}</strong></p>
-                <p style="margin: 5px 0;">Longitud: <strong>${dato.lon}</strong></p>
-                <p style="margin: 5px 0;">Fecha: <strong>${dato.fecha}</strong></p>
-                <p style="margin: 5px 0;">Temperatura: <strong>${dato.temperatura}</strong></p>
-                <p style="margin: 5px 0;">Humedad: <strong>${dato.humedad}</strong></p>
-                <p style="margin: 5px 0;">Viento: <strong>${dato.viento}</strong></p>
-                <p style="margin: 5px 0;"><strong>${dato.descripcion}</strong></p>
-            </div>`;
+			<p style="margin: 5px 0;">Latitud: <strong>${dato.lat}</strong></p>
+			<p style="margin: 5px 0;">Longitud: <strong>${dato.lon}</strong></p>
+			<p style="margin: 5px 0;">Fecha: <strong>${dato.fecha}</strong></p>
+			<p style="margin: 5px 0;">Temperatura: <strong>${dato.temperatura}</strong></p>
+			<p style="margin: 5px 0;">Humedad: <strong>${dato.humedad}</strong></p>
+			<p style="margin: 5px 0;">Viento: <strong>${dato.viento}</strong></p>
+			<p style="margin: 5px 0;">Observaciones: <strong>${dato.descripcion}</strong></p>
+			<p style="margin: 5px 0;"><a href='${dato.url}' target='_blank'>Más información</a></p>
+		</div>`;
 	}
 
 	const addPopup = (dato) => {
@@ -120,7 +120,7 @@ $conn->close();
 				url: "http://127.0.0.1:5000/guardar-clima", // Asegúrate de que la URL es accesible y correcta
 				data: datos,
 				success: function(response) {
-					console.log(response);
+					// console.log(response);
 					addPopup(response);
 				},
 				error: function(error) {
