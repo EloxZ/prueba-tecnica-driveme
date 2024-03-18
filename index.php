@@ -8,13 +8,12 @@ $password = $config['password'];
 $user = $config['username'];
 
 //Conectate a la db!
-
-
+require_once("init-db.php");
+require_once("queries-db.php");
 
 //Recibimos los datos de clima como array de objetos
-
-$datosClima = [];
-
+$datosClima = obtenerDatosClima($conn);
+$conn->close();
 
 ?>
 
@@ -68,7 +67,7 @@ $datosClima = [];
 
 	<script>
 	//Recibimos los datos desde php
-	var datosClima = []
+	var datosClima = <?= json_encode($datosClima) ?>;
 	
 	// Inicializar el mapa
 	var mymap = L.map('mapid').setView([40.416775, -3.703790], 13);
@@ -78,15 +77,26 @@ $datosClima = [];
 		maxZoom: 19,
 	}).addTo(mymap);
 
+	const popupLabel = (dato) => {
+		return `<div style="font-family: Arial, sans-serif; color: #333; background-color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                <h3 style="margin: 0;">Tiempo:</h3>
+                <p style="margin: 5px 0;">Latitud: <strong>${dato.lat}</strong></p>
+                <p style="margin: 5px 0;">Longitud: <strong>${dato.lon}</strong></p>
+                <p style="margin: 5px 0;">Fecha: <strong>${dato.fecha}</strong></p>
+                <p style="margin: 5px 0;">Temperatura: <strong>${dato.temperatura}</strong></p>
+                <p style="margin: 5px 0;">Humedad: <strong>${dato.humedad}</strong></p>
+                <p style="margin: 5px 0;">Viento: <strong>${dato.viento}</strong></p>
+                <p style="margin: 5px 0;"><strong>${dato.descripcion}</strong></p>
+            </div>`;
+	}
+
 	// Función para mostrar los datos en el mapa
 	datosClima.forEach(function(dato) {
 		//Creamos marcadores en el mapa
 		var marker = L.marker([dato.lat, dato.lon]).addTo(mymap);
 		
 		//Añañdimos el html al popup con marker.bindPopup("<b>Hola!</b>")
-		
-
-
+		marker.bindPopup(popupLabel(dato));
 	});
 
 	// Ejemplo de interacción con un popup y AJAX para un nuevo dato
@@ -106,13 +116,13 @@ $datosClima = [];
 			// Petición AJAX a http://localhost:5000/guardar-clima
 			$.ajax({
 				type: "POST",
-				url: "http://localhost:5000/guardar-clima", // Asegúrate de que la URL es accesible y correcta
+				url: "http://127.0.0.1:5000/guardar-clima", // Asegúrate de que la URL es accesible y correcta
 				data: datos,
 				success: function(response) {
-					// Aquí puedes manejar la respuesta de tu script
+					window.location.reload();
 				},
 				error: function(error) {
-					// Manejar errores
+					console.error(error);
 				}
 			});
 		});

@@ -1,6 +1,5 @@
 <?php
 
-
 $config = parse_ini_file('config.ini');
 $host = $config['host'];
 $dbname = $config['db_name'];
@@ -53,7 +52,3 @@ if (!$conn->select_db($dbname)) {
     echo "Conexión a la base de datos existente\n";
 }
 
-// Aquí puedes incluir la lógica para procesar los datos de clima recibidos
-
-$conn->close();
-?>
