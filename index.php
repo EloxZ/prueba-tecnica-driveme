@@ -78,7 +78,7 @@ $conn->close();
 	}).addTo(mymap);
 
 	const popupLabel = (dato) => {
-		return `<div style="font-family: Arial, sans-serif; color: #333; background-color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+		return `<div>
 			<p style="margin: 5px 0;">Latitud: <strong>${dato.lat}</strong></p>
 			<p style="margin: 5px 0;">Longitud: <strong>${dato.lon}</strong></p>
 			<p style="margin: 5px 0;">Fecha: <strong>${dato.fecha}</strong></p>
