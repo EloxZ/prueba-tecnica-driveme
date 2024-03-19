@@ -47,6 +47,8 @@ def insertar_clima_db(data):
 		
 		connection.commit()
 		success = True
+	except Exception as e:
+		print("An error occurred at insertar_clima_db:", e)
 	finally:
 		connection.close()
 
